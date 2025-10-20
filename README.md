@@ -1,148 +1,130 @@
-🦈 Hello Tiburona Profesional — Clase 4 (Buen Día Builders)
+# 🦈 Hello Tiburona Profesional — Clase 4
 
-Curso: Stellar + Rust — CodiGO / Buen Día Builders
-Clase: #4 — Construí tu primer contrato profesional
-Autora: @VianeyAlv6Alv
+![Rust](https://img.shields.io/badge/Rust-1.78%2B-orange?logo=rust&logoColor=white)
+![Soroban SDK](https://img.shields.io/badge/Soroban%20SDK-22-blue?logo=stellar&logoColor=white)
+![Status](https://img.shields.io/badge/Build-Passing-brightgreen?logo=githubactions&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT%2FApache--2.0-yellow)
+![Buen Día Builders](https://img.shields.io/badge/Buen%20Día%20Builders-%F0%9F%8C%9F-lightgrey)
 
-Última actualización: 19 de octubre de 2025
+> **Curso:** Stellar + Rust — CodiGO / Buen Día Builders  
+> **Clase 4:** *Implementa Hello Tiburona Profesional*  
+> **Autora:** [@VianeyAlv6Alv](https://github.com/VianeyAlv6Alv)  
+> **Última actualización:** 19 de octubre de 2025  
 
-📘 Descripción
+---
 
-Este proyecto implementa el contrato Hello Tiburona Profesional, el primer contrato “production-ready” del curso CodiGO Futuro / Buen Día Builders.
-Aplica conceptos avanzados de Rust, Soroban SDK y Stellar Futurenet, combinando:
+## 🧭 Descripción
 
-Manejo profesional de errores (Result, Option)
+Este contrato implementa **Hello Tiburona Profesional**, el primer *smart contract* profesional del curso **CodiGO Futuro / Buen Día Builders**.  
+Aplica los fundamentos de **Rust**, **Soroban SDK** y **Stellar Futurenet**, con un enfoque en **buenas prácticas**, **validaciones** y **testing profesional**.
 
-Organización de storage con DataKey
+> 📚 *“Esto no es un Hello World, es tu primer contrato production-ready.”*
 
-Validaciones de entrada con String
+---
 
-Control de acceso por Address
+## 🧩 Características principales
 
-Manejo de TTL (Time To Live)
+| Módulo | Descripción |
+|--------|--------------|
+| 🛠️ **initialize()** | Guarda `Admin`, inicializa contador y TTL |
+| 💬 **hello()** | Valida nombre (`String`), incrementa contador y guarda saludo |
+| 🔍 **get_contador()** | Devuelve el total de saludos globales |
+| 👋 **get_ultimo_saludo()** | Retorna el último saludo de una dirección |
+| 🔐 **reset_contador()** | Solo el `Admin` puede resetear el contador |
 
-Tests automatizados con casos de éxito y error
+---
 
-El objetivo es construir un contrato limpio, seguro y fácil de mantener, aplicando buenas prácticas de desarrollo en blockchain.
+## 🧱 Estructura del proyecto
 
-🛠️ Estructura del proyecto
 hello-tiburona/
-├─ Cargo.toml                # Workspace
-├─ Soroban.toml              # Configuración de red y contratos
-├─ README.md                 # Este archivo 
+├─ Cargo.toml # Workspace
+├─ Soroban.toml # Configuración de red y contratos
+├─ README.md # Este archivo ✨
 └─ contracts/
-   └─ hello-tiburona/
-      ├─ Cargo.toml          # Config del contrato
-      └─ src/
-         └─ lib.rs           # Código fuente + tests
+└─ hello-tiburona/
+├─ Cargo.toml # Config del contrato
+└─ src/
+└─ lib.rs # Código fuente + tests
 
+---
 
-⚙️ Instalación y setup
-1️⃣ Requisitos previos
+## ⚙️ Instalación y setup
+
+### 🔧 Requisitos previos
 
 Asegúrate de tener instalados:
 
+```bash
 rustup target add wasm32-unknown-unknown
 cargo install soroban-cli --locked
-
-
-
 Verifica las versiones:
 
+bash
+Copiar código
 rustc --version
 soroban --version
-
-2️⃣ Crear identidad (solo una vez)
+🪪 Crear identidad (solo una vez)
+bash
+Copiar código
 soroban config identity generate dev
 soroban config identity address dev
+Guarda la dirección que devuelve: será tu cuenta admin y firmante.
 
-
-Guarda la dirección que devuelve — será tu cuenta admin y firmante.
-
-🚧 Build y pruebas locales
-🧱 Compilar contrato
+🧪 Compilación y tests
+🧱 Build del contrato
+bash
+Copiar código
 soroban contract build
-
-
 Salida esperada:
 
+scss
+Copiar código
 ✅ Finished release [optimized] target(s)
-
 🧪 Ejecutar tests
+bash
+Copiar código
 cargo test
+Resultado:
 
-
-Debe mostrar:
-
+sql
+Copiar código
 running 6 tests
 test result: ok. 6 passed; 0 failed
-
 🚀 Despliegue en Futurenet
-1️⃣ Deploy
+1️⃣ Deploy del contrato
+bash
+Copiar código
 WASM=contracts/hello-tiburona/target/wasm32-unknown-unknown/release/hello_tiburona.wasm
 ID=$(soroban contract deploy --wasm $WASM --network futurenet --source dev)
 echo $ID
-
-2️⃣ Inicializar contrato
+2️⃣ Inicializar
+bash
+Copiar código
 soroban contract invoke --id $ID --fn initialize --network futurenet --source dev -- \
   --admin $(soroban config identity address dev)
+3️⃣ Probar funciones
+👉 Saludar
 
-3️⃣ Interactuar con el contrato
-
-Saludar:
-
+bash
+Copiar código
 soroban contract invoke --id $ID --fn hello --network futurenet -- \
   --usuario $(soroban config identity address dev) \
   --nombre "Ana"
+📊 Consultar contador
 
-
-Consultar contador:
-
+bash
+Copiar código
 soroban contract invoke --id $ID --fn get_contador --network futurenet
+📜 Ver último saludo
 
-
-Consultar último saludo:
-
+bash
+Copiar código
 soroban contract invoke --id $ID --fn get_ultimo_saludo --network futurenet -- \
   --usuario $(soroban config identity address dev)
+🔄 Resetear contador (solo admin)
 
-
-Resetear contador (solo admin):
-
+bash
+Copiar código
 soroban contract invoke --id $ID --fn reset_contador --network futurenet --source dev -- \
   --caller $(soroban config identity address dev)
 
-🧩 Características del contrato
-Módulo	Descripción
-initialize()	Guarda Admin, inicializa contador y TTL
-hello()	Valida String, incrementa contador, guarda saludo y extiende TTL
-get_contador()	Devuelve el total de saludos globales
-get_ultimo_saludo()	Retorna el último saludo de una dirección (o None)
-reset_contador()	Solo el Admin puede resetear a cero
-✅ Tests incluidos
-
-Inicialización correcta
-
-Doble inicialización (error)
-
-Saludo exitoso con nombre válido
-
-Error por nombre vacío
-
-Reset solo por admin
-
-Reset no autorizado (error)
-
-🧠 Reflexiones de aprendizaje
-
-String vs Symbol: String tiene .len(), .to_string(), y permite validaciones; Symbol no.
-
-Result y Option: diferencian entre fallas controladas y valores opcionales.
-
-Storage:
-
-instance → variables globales (admin, contador)
-
-persistent → datos por usuario (último saludo)
-
-Control de acceso: verificaciones de Address o require_auth().
