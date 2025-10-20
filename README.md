@@ -29,12 +29,13 @@ El objetivo es construir un contrato limpio, seguro y fácil de mantener, aplica
 hello-tiburona/
 ├─ Cargo.toml                # Workspace
 ├─ Soroban.toml              # Configuración de red y contratos
-├─ README.md                 # Este archivo ✨
+├─ README.md                 # Este archivo 
 └─ contracts/
    └─ hello-tiburona/
       ├─ Cargo.toml          # Config del contrato
       └─ src/
          └─ lib.rs           # Código fuente + tests
+
 
 ⚙️ Instalación y setup
 1️⃣ Requisitos previos
@@ -43,6 +44,7 @@ Asegúrate de tener instalados:
 
 rustup target add wasm32-unknown-unknown
 cargo install soroban-cli --locked
+
 
 
 Verifica las versiones:
