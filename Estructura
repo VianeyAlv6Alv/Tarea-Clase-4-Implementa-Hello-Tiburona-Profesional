@@ -1,0 +1,10 @@
+hello-tiburona/
+├─ Cargo.toml                # workspace
+├─ Soroban.toml              # redes y config de contrato
+├─ README.md
+└─ contracts/
+   └─ hello-tiburona/
+      ├─ Cargo.toml          # crate del contrato
+      └─ src/
+         └─ lib.rs           # contrato + tests
+
