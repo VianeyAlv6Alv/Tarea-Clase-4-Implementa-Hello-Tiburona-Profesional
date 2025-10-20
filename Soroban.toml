@@ -1,0 +1,13 @@
+[package]
+name = "hello-tiburona"
+
+[contract]
+# Se completa automáticamente tras el deploy si usas `soroban contract deploy`
+# o puedes almacenar el ID manualmente cuando despliegues.
+
+[network.futurenet]
+rpc_url = "https://rpc-futurenet.stellar.org:443"
+
+# Identidades opcionales para firmar (crea una con `soroban config identity generate dev`)
+[identity]
+# dev = "G...TU-ADDRESS-AQUI"
